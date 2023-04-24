@@ -1,0 +1,247 @@
+openapi: 3.0.0
+info:
+  title: jobs API
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://jobs-api-render-3nvx.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisterUserRequest"
+                - example:
+                    name: Dummy
+                    email: dummy@gmail.com
+                    password: secret
+            example:
+              name: Dummy
+              email: dummy@gmail.com
+              password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: login User
+      operationId: loginUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ2NzlkOWNhYjBkOTAwMzQwZjRiYWMiLCJuYW1lIjoiRHVtbXkiLCJpYXQiOjE2ODIzNDAzMTQsImV4cCI6MTY4NDkzMjMxNH0.48ftKJVjFPy2rcaGTwpBcgMWO-VK02hE4mSQJgxiWaQ
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginUserRequest"
+                - example:
+                    email: dummy@gmail.com
+                    password: secret
+            example:
+              email: dummy@gmail.com
+              password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    post:
+      tags:
+        - Job
+      summary: Create Job
+      operationId: CreateJob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateJobRequest"
+                - example:
+                    company: Amazon
+                    position: Backend engineer
+            example:
+              company: Amazon
+              position: Backend engineer
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - Job
+      summary: Get All Jobs
+      operationId: GetAllJobs
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    get:
+      tags:
+        - Job
+      summary: Get a single Job
+      operationId: GetasingleJob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Job
+      summary: Update a Job
+      operationId: UpdateaJob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateaJobRequest"
+                - example:
+                    company: Apple
+                    position: Front-end Developer
+            example:
+              company: Apple
+              position: Front-end Developer
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Job
+      summary: Delete a Job
+      operationId: DeleteaJob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Dummy
+        email: dummy@gmail.com
+        password: secret
+    loginUserRequest:
+      title: loginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: dummy@gmail.com
+        password: secret
+    CreateJobRequest:
+      title: CreateJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Amazon
+        position: Backend engineer
+    UpdateaJobRequest:
+      title: UpdateaJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Apple
+        position: Front-end Developer
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Job
+    description: ""
